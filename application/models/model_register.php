@@ -28,15 +28,18 @@ class Model_Register extends Model
             }
     return $errors;
     }
+    //Добавление usera
     public function addUser()
     {
         
             $login = $_POST['login'];
             $hash = password_hash((trim($_POST['password'])), PASSWORD_BCRYPT);
 
-            $query = 'INSERT INTO users (login, hash) VALUES($login, $hash)';
-            $db = Model::get_connection();
+            $query = "INSERT INTO users (login, hash) VALUES(:login, :hash)";
+            $db = $this->get_connection();
             $stmt = $db->prepare($query);
+            $stmt->bindParam(':login', $login);
+            $stmt->bindParam(':hash', $hash);
         
     return $stmt->execute();
     }
