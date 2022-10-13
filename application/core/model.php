@@ -5,9 +5,16 @@ class Model
     {
         //todo
     }
-    public function login()
+    /*public function db()
+
     {
         $link=mysqli_connect("localhost", "root", "seva1312", "test");
-        
+        return $link;
+    }*/
+    public static function get_connection()
+    {
+        return new PDO('mysql:host=localhost;dbname=test', 'root', 'seva1312');
     }
+        
+    
 }
