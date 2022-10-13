@@ -31,16 +31,21 @@ class Model_Register extends Model
     //Добавление usera
     public function addUser()
     {
-        
             $login = $_POST['login'];
             $hash = password_hash((trim($_POST['password'])), PASSWORD_BCRYPT);
 
-            $query = "INSERT INTO users (login, hash) VALUES(:login, :hash)";
             $db = $this->get_connection();
+            $query = $db->prepare("SELECT login FROM users WHERE login='$login'");
+            $login_ck = $query->FETCH(PDO::FETCH_ASSOC);
+            print_r($login_ck);
+        if (!empty($login_ck)) {
+            echo 'Пользователь с таким логином уже существует';
+        }else {
+            $query = "INSERT INTO users (login, hash) VALUES(:login, :hash)";
             $stmt = $db->prepare($query);
             $stmt->bindParam(':login', $login);
-            $stmt->bindParam(':hash', $hash);
-        
-    return $stmt->execute();
+            $stmt->bindParam(':hash', $hash); 
+            $stmt->execute(); 
+        }
     }
 }

@@ -11,10 +11,9 @@ class Controller_Register extends Controller
     {
         if (!empty($_POST)) {
             $err = $this->model->checkData();
-            print_r($err);
             if (count($err) == 0) {
                 $this->model->addUser();
-                var_dump($_POST);
+                //var_dump($_POST);
             }else
             {
                 print "<b>При регистрации произошли следующие ошибки:</b><br>";
