@@ -35,11 +35,11 @@ class Model_Register extends Model
             $hash = password_hash((trim($_POST['password'])), PASSWORD_BCRYPT);
 
             $db = $this->get_connection();
-            $query = $db->prepare("SELECT login FROM users WHERE login='$login'");
+            $query = $db->query("SELECT login FROM users WHERE login='$login'");
             $login_ck = $query->FETCH(PDO::FETCH_ASSOC);
-            print_r($login_ck);
+            //print_r($login_ck);
         if (!empty($login_ck)) {
-            echo 'Пользователь с таким логином уже существует';
+            echo 'Ошибка!!! Пользователь с таким логином уже существует!';
         }else {
             $query = "INSERT INTO users (login, hash) VALUES(:login, :hash)";
             $stmt = $db->prepare($query);
